@@ -1,28 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Target Ranger</title>
+    <title>Shooting Accuracy</title>
     <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <script type="text/javascript" charset="utf-8" src="js/cordova-1.9.0.js"></script>
-    <script type="text/javascript" src="js/kinetic-v3.10.2.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/about.js"></script>
   </head>
   <body>
     <div id="main-page" data-role="page">
       <div id="header" data-role="header" class="ui-header ui-bar-a">
-        <h2 class="ui-title">Target Range Calculator</h2>
+        <h2 class="ui-title">Shooting Accuracy</h2>
       </div>
       
       <div data-role="content">
-        <div id="picture-button">
-          <a onclick="capturePhoto();" data-role="button" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="b" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">Capture Photo of Target</span></span></a>
-        </div>
+        <!-- JQuery FAIL: Can't use it, so have to manually class stuff -->
+        <a href="photo.html" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
+          <span class="ui-btn-inner ui-btn-corner-all">
+            <span class="ui-btn-text">Capture Photo of Target</span>
+          </span>
+        </a>
+        <a href="history.html" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
+          <span class="ui-btn-inner ui-btn-corner-all">
+            <span class="ui-btn-text">Previous History</span>
+          </span>
+        </a>
+        <a href="stats.html" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
+          <span class="ui-btn-inner ui-btn-corner-all">
+            <span class="ui-btn-text">Statistics</span>
+          </span>
+        </a>
+        <a onclick="showAbout();" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
+          <span class="ui-btn-inner ui-btn-corner-all">
+            <span class="ui-btn-text">About</span>
+          </span>
+        </a>        
+        <!-- Drawing Canvas -->
         <div id="canvas-div"></div>
       </div>
       
       <div data-role="footer" class="ui-footer ui-bar-a" role="contentinfo">
-        <h4 class="ui-title" role="heading" aria-level="1">Brought to you by Cijy</h4>
+        <h2 class="ui-title">Brought to you by Cijy</h2>
       </div>
     </div>
   </body>
