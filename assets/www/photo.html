@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shooting Accuracy</title>
+    <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <script type="text/javascript" charset="utf-8" src="js/cordova-1.9.0.js"></script>
+    <script type="text/javascript" src="js/kinetic-v3.10.2.min.js"></script>
+    <script src="js/photo_and_draw.js"></script>
+    <script src="js/about.js"></script>
+  </head>
+  <body>
+    <div id="main-page" data-role="page">
+      <div id="header" data-role="header" class="ui-header ui-bar-a">
+        <h2 class="ui-title">Shooting Accuracy</h2>
+      </div>
+      
+      <div data-role="content">
+        <!-- JQuery FAIL: Can't use it, so have to manually class stuff -->
+        <a onclick="processShots();" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
+          <span class="ui-btn-inner ui-btn-corner-all">
+            <span class="ui-btn-text">Tap photo to mark shots, then click here</span>
+          </span>
+        </a>        
+        <!-- Drawing Canvas -->
+        <div id="canvas-div"></div>
+      </div>
+      
+      <div data-role="footer" class="ui-footer ui-bar-a" role="contentinfo">
+        <h2 class="ui-title">Brought to you by Cijy</h2>
+      </div>
+    </div>
+  </body>
+</html>
