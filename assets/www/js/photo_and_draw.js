@@ -13,7 +13,7 @@ function onDeviceReady() {
 	stage = new Kinetic.Stage({
 		container: "canvas-div",
 		width: window.innerWidth,
-		height: window.innerHeight
+		height: window.innerHeight * .9
 	});
 	image_layer = new Kinetic.Layer();
 	dots_layer = new Kinetic.Layer();
@@ -25,8 +25,10 @@ function onDeviceReady() {
 // A button will call this function
 function capturePhoto() {
   // Take picture using device camera and retrieve image as URI
-  navigator.camera.getPicture(onPhotoCaptureSuccess, onFail, { quality: 75,
-    destinationType: destinationType.FILE_URI });
+  navigator.camera.getPicture(onPhotoCaptureSuccess, onFail, 
+		  { quality: 75,
+	  	    destinationType: destinationType.FILE_URI,
+	  	    correctOrientation: true});
 }
 
 //Called when a photo is successfully retrieved
@@ -39,7 +41,7 @@ function onPhotoCaptureSuccess(imageURI) {
 		  y: 0,
 		  image: image_obj,
 		  width: window.innerWidth,
-		  height: window.innerHeight
+		  height: window.innerHeight * .9
 	  });
 	  dots_layer.removeChildren();
 	  image_layer.removeChildren();
@@ -66,6 +68,8 @@ function drawDot(){
 		color = '#FF0000';
 		name = 'target';
 		draw_target = true;
+		var help_btn = document.getElementById('help_button');
+		help_btn.innerHTML = 'Tap the photo to mark your shots<br>Click here when done';
 	}
 	
 	var circle = new Kinetic.Circle({
@@ -86,7 +90,6 @@ function drawDot(){
 		  draw_target = false;
 	  }
 	});
-	
 	dots_layer.add(circle);
 	dots_layer.draw();
 }
@@ -99,9 +102,5 @@ function onFail(message) {
 //Process shots
 function processShots(){
   var circles = dots_layer.getChildren();
-  for (var n = 0; n < circles.length; n++ ){
-	var circle = circles[n];
-    console.log(circle.getX() + ', ' + circle.getY());
-  }
   window.location = "index.html";
 }
