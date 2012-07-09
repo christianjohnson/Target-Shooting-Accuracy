@@ -28,7 +28,7 @@ function get_label(d)
     } else if(d < .2) {
         return "Excellent";
     } else if(d < .3) {
-        return "Very good";
+        return "Very Good";
     } else if(d < .4) {
         return "Good";
     } else if(d < .5) {
