@@ -101,6 +101,8 @@ function onFail(message) {
 
 //Process shots
 function processShots(){
-  var circles = dots_layer.getChildren();
-  window.location = "index.html";
+  window.localStorage.setItem("shots", JSON.stringify(dots_layer.getChildren()));
+  window.localStorage.setItem("window_width", window.innerWidth);
+  window.localStorage.setItem("window_height", window.innerHeight);
+  window.location = "stats.html";
 }
