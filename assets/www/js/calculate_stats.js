@@ -1,11 +1,11 @@
 function dist(A,B)
 {
-    return Math.sqrt( Math.pow( A.getX() - B.getX(), 2 ) + Math.pow(A.getY() - B.getY(), 2 ) );
+    return Math.sqrt( Math.pow( A.x - B.x, 2 ) + Math.pow(A.y - B.y, 2 ) );
 }
 
 function scaled_dist(A,B,X,Y)
 {
-    return Math.sqrt( Math.pow( A.getX()/X - B.getX()/X, 2 ) + Math.pow(A.getY()/Y - B.getY()/Y, 2 ) );
+    return Math.sqrt( Math.pow( A.x/X - B.x/X, 2 ) + Math.pow(A.y/Y - B.y/Y, 2 ) );
 }
 
 function avg_dist(C,L)
@@ -51,7 +51,7 @@ function get_stats(pointList, xDimen, yDimen)
     l = new Array();
     for(i=0;i<pointList.length;i++)
     {
-        if(pointList[i].getName() == "target")
+        if(pointList[i].name == "target")
         {
             c.push(pointList[i]);
         }

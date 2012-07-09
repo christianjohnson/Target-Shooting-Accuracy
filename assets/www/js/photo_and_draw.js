@@ -101,7 +101,17 @@ function onFail(message) {
 
 //Process shots
 function processShots(){
-  window.localStorage.setItem("shots", JSON.stringify(dots_layer.getChildren()));
+  var circles = dots_layer.getChildren();
+  var circles_to_rtn = Array();
+  for(var i=0; i < circles.length; i++){
+    var circle = {
+      x: circles[i].getX(),
+      y: circles[i].getY(),
+      name: circles[i].getName()
+    };
+    circles_to_rtn.push(circle);
+  }
+  window.localStorage.setItem("shots", JSON.stringify(circles_to_rtn));
   window.localStorage.setItem("window_width", window.innerWidth);
   window.localStorage.setItem("window_height", window.innerHeight);
   window.location = "stats.html";
