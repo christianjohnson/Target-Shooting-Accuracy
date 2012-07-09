@@ -22,27 +22,23 @@ function avg_dist(C,L)
 function get_label(d)
 {
     if(d<0) {
-        return "perfect";
+        return "Perfect";
     } else if(d < .1) {
-        return "perfect";
+        return "Perfect";
     } else if(d < .2) {
-        return "excellent";
+        return "Excellent";
     } else if(d < .3) {
-        return "very good";
+        return "Very good";
     } else if(d < .4) {
-        return "good";
+        return "Good";
     } else if(d < .5) {
-        return "okay";
-    } else if(d < .6) {
-        return "meh";
+        return "Okay";
     } else if(d < .7) {
-        return "poor";
-    } else if(d < .8) {
-        return "bad";
+        return "Poor";
     } else if(d < .9) {
-        return "dreadful";
+        return "Dreadful";
     } else {
-        return "you shouldn't shoot while drinking";
+        return "N/A";
     }
 }
 

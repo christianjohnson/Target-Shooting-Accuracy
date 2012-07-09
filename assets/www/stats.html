@@ -1,8 +1,11 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <title>Statistics</title>
+    <link rel="stylesheet" href="css/jquery.mobile-1.1.0.min.css" />
+    <link rel="stylesheet" href="css/main.css" />
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="js/calculate_stats.js">
-    </script>
+    <script type="text/javascript" src="js/calculate_stats.js"></script>
     <script type="text/javascript">
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
@@ -16,8 +19,9 @@
         var options = {
           legend: {position: 'bottom'},
           title: 'Shot Performance',
-          vAxis: {title: 'Distance',  titleTextStyle: {color: 'red'}}
+          vAxis: {title: 'Quality of Shot',  titleTextStyle: {color: 'red'}}
         };
+        
         var chart = new google.visualization.BarChart(
             document.getElementById('chart_div'));
         chart.draw(data, options);
@@ -26,6 +30,7 @@
   </head>
   <body>
     <div id="main-page" data-role="page">
+      
       <div data-role="content">
         <a href="index.html" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
           <span class="ui-btn-inner ui-btn-corner-all">
@@ -35,6 +40,10 @@
           </span>
         </a>
         <div id="chart_div" style="width: 100%; height: 100%;"></div>
+      </div>
+      
+      <div data-role="footer" class="ui-footer ui-bar-a" role="contentinfo">
+        <h2 class="ui-title">Brought to you by Cijy</h2>
       </div>
     </div>
   </body>
