@@ -21,19 +21,17 @@ function avg_dist(C,L)
 
 function get_label(d)
 {
-    if(d<0) {
-        return "Perfect";
-    } else if(d < .1) {
-        return "Perfect";
+    if(d < .1) {
+    	return "Perfect";
     } else if(d < .2) {
         return "Excellent";
     } else if(d < .3) {
         return "Very Good";
     } else if(d < .4) {
         return "Good";
-    } else if(d < .5) {
+    } else if(d < .6) {
         return "Okay";
-    } else if(d < .7) {
+    } else if(d < .8) {
         return "Poor";
     } else if(d < .9) {
         return "Dreadful";
