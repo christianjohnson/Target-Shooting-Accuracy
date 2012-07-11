@@ -1,4 +1,4 @@
 function showAbout(){
-	str = "Made by Christian Johnson\nSee http://christianjohnson.org";
+	str = "Made by Christian Johnson and Dan Kimball\nSee http://christianjohnson.org";
 	alert(str);
 }
