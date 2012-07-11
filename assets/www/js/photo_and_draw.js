@@ -2,6 +2,7 @@ var pictureSource;   // picture source
 var destinationType; // sets the format of returned value
 var stage, image_layer, dots_layer, text_layer;
 var draw_target = false;
+var num_circles = 0;
 
 // Wait for Cordova to connect with the device
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -35,7 +36,6 @@ function capturePhoto() {
 function onPhotoCaptureSuccess(imageURI) {
   var image_obj = new Image();
   image_obj.onload = function() {
-	  console.log("drawing image...");
 	  var image_k = new Kinetic.Image({
 		  x: 0,
 		  y: 0,
@@ -63,13 +63,20 @@ function drawDot(){
 	touch_y = touch_event.y;
 	var color = '#32CD32';
 	var name = 'shot';
+	var help_btn = document.getElementById('help_button');
 	
 	if (!draw_target){
 		color = '#FF0000';
 		name = 'target';
 		draw_target = true;
-		var help_btn = document.getElementById('help_button');
-		help_btn.innerHTML = 'Tap the photo to mark your shots<br>Click here when done';
+		help_btn.innerHTML = 'Tap the photo to mark your shots';
+		num_circles--;
+	}
+	
+	if (num_circles > 3){
+	  help_btn.innerHTML = 'Click here when done';	
+	} else if (num_circles > 1){
+		help_btn.innerHTML = 'Tap a shot to remove it';	
 	}
 	
 	var circle = new Kinetic.Circle({
@@ -92,6 +99,7 @@ function drawDot(){
 	});
 	dots_layer.add(circle);
 	dots_layer.draw();
+	num_circles++;
 }
 
 // Called if something bad happens.
