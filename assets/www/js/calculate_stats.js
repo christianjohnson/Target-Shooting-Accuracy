@@ -25,10 +25,12 @@ function get_label(d){
         return "Very Good";
     } else if(d < .4) {
         return "Good";
-    } else if(d < .6) {
+    } else if(d < .5) {
         return "Okay";
-    } else if(d < .7) {
+    } else if(d < .6) {
         return "Poor";
+    } else if(d < .7) {
+        return "Bad";
     } else if(d < .8) {
         return "Dreadful";
     } else {
