@@ -179,8 +179,8 @@ function getData(legend_flag, stats){
 	width: window.innerWidth,
 	legend: legend,
 	title: 'Shot Performance',
-	vAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}},
-	hAxis: {title: 'Quality of Shots',  titleTextStyle: {color: 'red'}}
+      vAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}, textPosition:'none'},
+      hAxis: {title: 'Quality of Shots',  titleTextStyle: {color: 'red'}, textPosition:'none'}
   } : {
 	height: chart_height,
 	width: window.innerWidth,
