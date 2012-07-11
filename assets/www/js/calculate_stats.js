@@ -115,7 +115,7 @@ function centroid(c, pointList, X, Y) {
     return a;
 }
 
-function get_stats(pointList, xDimen, yDimen){
+function get_centroid_stats(pointList, xDimen, yDimen){
     c = new Array();
     l = new Array();
     for(i=0;i<pointList.length;i++)
@@ -130,6 +130,23 @@ function get_stats(pointList, xDimen, yDimen){
         }
     }
     return dist_distribution(c[0], l,xDimen,yDimen);
+}
+
+function get_stats(pointList, xDimen, yDimen){
+    c = new Array();
+    l = new Array();
+    for(i=0;i<pointList.length;i++)
+    {
+        if(pointList[i].name == "target")
+        {
+            c.push(pointList[i]);
+        }
+        else
+        {
+            l.push(pointList[i]);
+        }
+    }
+    return centroid(c[0], l,xDimen,yDimen);
 }
 
 
@@ -150,7 +167,7 @@ function getData(legend_flag){
   if (bar_view == 0)
     parsed_data = google.visualization.arrayToDataTable(get_stats(circles,width,height));
   else
-	parsed_data = // TODO: DK 
+	parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles,width,height));
 	  
   var legend = legend_flag ? {position: 'top'} : {position : 'none'};
 	  
