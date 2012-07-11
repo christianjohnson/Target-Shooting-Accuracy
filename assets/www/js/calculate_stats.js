@@ -164,7 +164,7 @@ function getData(legend_flag){
   
   var parsed_data = null;
   
-  if (bar_view < 2)
+  if (bar_view != 1)
     parsed_data = google.visualization.arrayToDataTable(get_stats(circles,width,height));
   else
 	parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles,width,height));
