@@ -152,7 +152,7 @@ function get_stats(pointList, xDimen, yDimen){
 
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawBarChart);
-var bar_view = 2;
+var bar_view = 0;
 
 function getData(legend_flag, stats){
   var circles = JSON.parse(window.localStorage.getItem("shots"));
