@@ -82,13 +82,13 @@ function get_stats(pointList, xDimen, yDimen){
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawBarChart);
 var bar_view = true;
-
+var parsed_data = null;
 
 function getData(legend_flag){
 	  var circles = JSON.parse(window.localStorage.getItem("shots"));
 	  var width = window.localStorage.getItem("window_width");
 	  var height = window.localStorage.getItem("window_height");
-	  var data = google.visualization.arrayToDataTable(
+	  parsed_data = google.visualization.arrayToDataTable(
 			  get_stats(circles,width,height));
 	  var chart_height = window.innerHeight - 
 	    document.getElementById("help_button").offsetHeight - 
@@ -105,7 +105,7 @@ function getData(legend_flag){
 		hAxis: {title: 'Quality of Shots',  titleTextStyle: {color: 'red'}}
 	  };
 	  
-	  return [data, options];
+	  return [parsed_data, options];
 }
 
 
