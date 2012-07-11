@@ -106,8 +106,8 @@ function drawDot(){
 
 // Called if something bad happens.
 function onFail(message) {
-  alert('Failed because: ' + message);
   _gaq.push(['_trackEvent', 'Exceptions', 'Application', message, null, true]);
+  window.location = 'index.html';
 }
 
 //Process shots
