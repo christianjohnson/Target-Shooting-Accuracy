@@ -152,9 +152,9 @@ function get_stats(pointList, xDimen, yDimen){
 
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawBarChart);
-var bar_view = 0;
+var bar_view = 1;
 
-function getData(legend_flag){
+function getData(legend_flag, stats){
   var circles = JSON.parse(window.localStorage.getItem("shots"));
   var width = window.localStorage.getItem("window_width");
   var height = window.localStorage.getItem("window_height");
@@ -164,7 +164,7 @@ function getData(legend_flag){
   
   var parsed_data = null;
   
-  if (bar_view != 1)
+  if (stats)
     parsed_data = google.visualization.arrayToDataTable(get_stats(circles,width,height));
   else
 	parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles,width,height));
@@ -184,7 +184,7 @@ function getData(legend_flag){
 
 
 function drawBarChart(){
-  var stuff = getData(false);
+  var stuff = getData(false, true);
   var data = stuff[0];
   var options = stuff[1];
   var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
@@ -194,7 +194,7 @@ function drawBarChart(){
 
 
 function drawPieChart(){
-  var stuff = getData(true);
+  var stuff = getData(true, true);
   var data = stuff[0];
   var options = stuff[1];
   var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
@@ -203,7 +203,7 @@ function drawPieChart(){
 }
 
 function drawScatterChart(){
-  var stuff = getData(true);
+  var stuff = getData(true, false);
   var data = stuff[0];
   var options = stuff[1]; 
   var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -213,14 +213,17 @@ function drawScatterChart(){
 
 function toggleChart(){
   if (bar_view == 0){
+	  console.log("Drawing pie chart: " + bar_view);
 	  drawPieChart();
 	  document.getElementById('chart_text').innerHTML = "Toggle Scatter Chart";
 	  bar_view++;
   }else if (bar_view == 1){
+	  console.log("Drawing scatter chart: " + bar_view);
 	  drawScatterChart();
 	  document.getElementById('chart_text').innerHTML = "Toggle Bar Chart";
 	  bar_view++;
   }else{
+	  console.log("Drawing bar chart: " + bar_view);
 	  drawBarChart();
 	  document.getElementById('chart_text').innerHTML = "Toggle Pie Chart";
 	  bar_view = 0;
