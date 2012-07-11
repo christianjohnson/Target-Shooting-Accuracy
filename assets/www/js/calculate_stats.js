@@ -31,9 +31,9 @@ function get_label(d)
         return "Good";
     } else if(d < .6) {
         return "Okay";
-    } else if(d < .8) {
+    } else if(d < .7) {
         return "Poor";
-    } else if(d < .9) {
+    } else if(d < .8) {
         return "Dreadful";
     } else {
         return "N/A";
