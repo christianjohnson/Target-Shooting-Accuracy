@@ -132,11 +132,11 @@ function drawPieChart(){
 function toggleChart(){
   if (bar_view){
 	  drawPieChart();
-	  document.getElementById('chart_text').innerHTML = "Bar Chart";
+	  document.getElementById('chart_text').innerHTML = "Toggle Bar Chart";
 	  bar_view = !bar_view;
   }else{
 	  drawBarChart();
-	  document.getElementById('chart_text').innerHTML = "Pie Chart";
+	  document.getElementById('chart_text').innerHTML = "Toggle Pie Chart";
 	  bar_view = !bar_view;
   }
 }
