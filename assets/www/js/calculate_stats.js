@@ -129,7 +129,7 @@ function get_centroid_stats(pointList, xDimen, yDimen){
             l.push(pointList[i]);
         }
     }
-    return dist_distribution(c[0], l,xDimen,yDimen);
+    return centroid(c[0], l,xDimen,yDimen);
 }
 
 function get_stats(pointList, xDimen, yDimen){
@@ -146,7 +146,7 @@ function get_stats(pointList, xDimen, yDimen){
             l.push(pointList[i]);
         }
     }
-    return centroid(c[0], l,xDimen,yDimen);
+    return dist_distribution(c[0], l,xDimen,yDimen);
 }
 
 
