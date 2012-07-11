@@ -170,15 +170,21 @@ function getData(legend_flag, stats){
 	parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles,width,height));
 	  
   var legend = legend_flag ? {position: 'top'} : {position : 'none'};
-	  
-  var options = {
+
+  var options = stats ? {
     height: chart_height,
 	width: window.innerWidth,
 	legend: legend,
 	title: 'Shot Performance',
 	vAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}},
 	hAxis: {title: 'Quality of Shots',  titleTextStyle: {color: 'red'}}
+  } : {
+	height: chart_height,
+	width: window.innerWidth,
+	legend: legend,
+	title: 'Shot Performance'
   };
+  
   return [parsed_data, options];
 }
 
