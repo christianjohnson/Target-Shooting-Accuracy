@@ -88,17 +88,14 @@ function getData(legend_flag){
 	  var circles = JSON.parse(window.localStorage.getItem("shots"));
 	  var width = window.localStorage.getItem("window_width");
 	  var height = window.localStorage.getItem("window_height");
-	  var data = google.visualization.arrayToDataTable(get_stats(circles, 
-		                                                             width, 
-		                                                             height));
+	  var data = google.visualization.arrayToDataTable(
+			  get_stats(circles,width,height));
 	  var chart_height = window.innerHeight - 
 	    document.getElementById("help_button").offsetHeight - 
 		document.getElementById("footer").offsetHeight
 	  
-	  var legend = {position : 'none'};
-	  if (legend_flag){
-	    legend = {position: 'top'};
-	  }
+	  var legend = legend_flag ? {position: 'top'} : {position : 'none'};
+	  
 	  var options = {
 	    height: chart_height,
 		width: window.innerWidth,
