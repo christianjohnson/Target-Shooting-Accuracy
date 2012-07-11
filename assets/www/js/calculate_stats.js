@@ -8,8 +8,7 @@ function scaled_dist(A,B,X,Y){
 
 function avg_dist(C,L){
     s = 0.0;
-    for(i=0;i<L.length;i++)
-    {
+    for(i=0;i<L.length;i++){
         s += dist(C,L[i]);
     }
 
@@ -85,27 +84,26 @@ var bar_view = true;
 var parsed_data = null;
 
 function getData(legend_flag){
-	  var circles = JSON.parse(window.localStorage.getItem("shots"));
-	  var width = window.localStorage.getItem("window_width");
-	  var height = window.localStorage.getItem("window_height");
-	  parsed_data = google.visualization.arrayToDataTable(
-			  get_stats(circles,width,height));
-	  var chart_height = window.innerHeight - 
-	    document.getElementById("help_button").offsetHeight - 
-		document.getElementById("footer").offsetHeight
+  var circles = JSON.parse(window.localStorage.getItem("shots"));
+  var width = window.localStorage.getItem("window_width");
+  var height = window.localStorage.getItem("window_height");
+  parsed_data = google.visualization.arrayToDataTable(
+      get_stats(circles,width,height));
+  var chart_height = window.innerHeight - 
+      document.getElementById("help_button").offsetHeight - 
+	  document.getElementById("footer").offsetHeight
 	  
-	  var legend = legend_flag ? {position: 'top'} : {position : 'none'};
+  var legend = legend_flag ? {position: 'top'} : {position : 'none'};
 	  
-	  var options = {
-	    height: chart_height,
-		width: window.innerWidth,
-		legend: legend,
-	    title: 'Shot Performance',
-		vAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}},
-		hAxis: {title: 'Quality of Shots',  titleTextStyle: {color: 'red'}}
-	  };
-	  
-	  return [parsed_data, options];
+  var options = {
+    height: chart_height,
+	width: window.innerWidth,
+	legend: legend,
+	title: 'Shot Performance',
+	vAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}},
+	hAxis: {title: 'Quality of Shots',  titleTextStyle: {color: 'red'}}
+  };
+  return [parsed_data, options];
 }
 
 
