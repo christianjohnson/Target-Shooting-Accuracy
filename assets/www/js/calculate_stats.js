@@ -79,7 +79,12 @@ function get_stats(pointList, xDimen, yDimen){
 }
 
 
-function getData(){
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawBarChart);
+var bar_view = true;
+
+
+function getData(legend_flag){
 	  var circles = JSON.parse(window.localStorage.getItem("shots"));
 	  var width = window.localStorage.getItem("window_width");
 	  var height = window.localStorage.getItem("window_height");
@@ -89,25 +94,26 @@ function getData(){
 	  var chart_height = window.innerHeight - 
 	    document.getElementById("help_button").offsetHeight - 
 		document.getElementById("footer").offsetHeight
-		
+	  
+	  var legend = {position : 'none'};
+	  if (legend_flag){
+	    legend = {position: 'top'};
+	  }
 	  var options = {
 	    height: chart_height,
 		width: window.innerWidth,
-		legend: {position: 'bottom'},
+		legend: legend,
 	    title: 'Shot Performance',
-		vAxis: {title: 'Quality of Shot',  titleTextStyle: {color: 'red'}},
-		hAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}}
+		vAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}},
+		hAxis: {title: 'Quality of Shots',  titleTextStyle: {color: 'red'}}
 	  };
 	  
 	  return [data, options];
 }
 
-google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawBarChart);
-var bar_view = true;
 
 function drawBarChart(){
-  var stuff = getData();
+  var stuff = getData(false);
   var data = stuff[0];
   var options = stuff[1];
   var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
@@ -117,11 +123,23 @@ function drawBarChart(){
 
 
 function drawPieChart(){
-  var stuff = getData();
+  var stuff = getData(true);
   var data = stuff[0];
   var options = stuff[1];
   var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
   chart.draw(data, options);
   _gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
-  
+}
+
+
+function toggleChart(){
+  if (bar_view){
+	  drawPieChart();
+	  document.getElementById('chart_text').innerHTML = "Bar Chart";
+	  bar_view = !bar_view;
+  }else{
+	  drawBarChart();
+	  document.getElementById('chart_text').innerHTML = "Pie Chart";
+	  bar_view = !bar_view;
+  }
 }
