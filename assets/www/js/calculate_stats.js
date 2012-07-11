@@ -42,30 +42,24 @@ function get_label(d)
 
 function dist_distribution(c, pointList, X, Y) 
 {
-    var m = new Object();
-    for(i=0;i<2;i+=.1)
+    var m = new Array();
+    for(i=0;i<20;i+=1)
     {
         m[i] = new Array();
-        m[i][0] = get_label(i);
+        m[i][0] = get_label(i/10.0);
         m[i][1] = 0;
     }
     for(i=0;i<pointList.length;i++)
     {
         d = scaled_dist(c,pointList[i],X,Y);
         d = Math.round(d*10)/10.0;
-        if(m[d] == undefined)
-        {
-            m[d] = new Array();
-            m[d][0] = get_label(d);
-            m[d][1] = 0;
-        }
-        m[d][1] += 1;
+        m[d/10.0][1] += 1;
     }
     var a = new Array();
     a.push(new Array("Distance","Number of Shots"));
-    for (var key in m) {
-        if (m.hasOwnProperty(key) && m[key][1] > 0) {
-            a.push(m[key]);
+    for (i=0;i<20;i+=1) {
+        if  m[i/10.0][1] > 0) {
+            a.push(m[i]);
         }
     }
 
