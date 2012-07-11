@@ -61,6 +61,19 @@ function dist_distribution(c, pointList, X, Y) {
     return a;
 }
 
+function centroid(c, pointList, X, Y) {
+    cX = 0.0;
+    cY = 0.0;
+    for(i=0;i<pointList.length;i++) {
+        cX += pointList[i].x;
+        cY += pointList[i].y;
+    }
+    cX = cX / pointList.length;
+    cY = cY / pointList.length;
+
+    a = new Array();
+    a.push(new Array("X","Shots","Target","Centroid"));
+
 function get_stats(pointList, xDimen, yDimen){
     c = new Array();
     l = new Array();
