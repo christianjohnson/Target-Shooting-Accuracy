@@ -147,7 +147,7 @@ function getData(legend_flag){
   
   var parsed_data = null;
   
-  if (bar_view == 0)
+  if (bar_view < 2)
     parsed_data = google.visualization.arrayToDataTable(get_stats(circles,width,height));
   else
 	parsed_data = // TODO: DK 
