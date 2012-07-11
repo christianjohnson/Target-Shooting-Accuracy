@@ -6,37 +6,10 @@
     <link rel="stylesheet" href="css/main.css" />
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="js/calculate_stats.js"></script>
-    <script type="text/javascript">
-      google.load("visualization", "1", {packages:["corechart"]});
-      google.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var circles = JSON.parse(window.localStorage.getItem("shots"));
-        var width = window.localStorage.getItem("window_width");
-        var height = window.localStorage.getItem("window_height");
-        var data = google.visualization.arrayToDataTable(get_stats(circles, 
-                                                                   width, 
-                                                                   height));
-        var chart_height = window.innerHeight - 
-          document.getElementById("help_button").offsetHeight - 
-          document.getElementById("footer").offsetHeight
-        var options = {
-          height: chart_height,
-          width: window.innerWidth,
-          legend: {position: 'none'},
-          title: 'Shot Performance',
-          vAxis: {title: 'Quality of Shot',  titleTextStyle: {color: 'red'}},
-          hAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}}
-        };
-        
-        var chart = new google.visualization.BarChart(
-            document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
-    </script>
+    <script type="text/javascript" src="js/ga.js"></script>
   </head>
   <body>
     <div id="main-page" data-role="page">
-      
       <div data-role="content">
         <a href="index.html" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
           <span class="ui-btn-inner ui-btn-corner-all">

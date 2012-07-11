@@ -55,6 +55,8 @@ function onPhotoCaptureSuccess(imageURI) {
   image_layer.on('touchend', function(){
 	drawDot();	
   });
+  
+  _gaq.push(['_trackEvent', 'Interaction', 'Took Picture']);
 }
 
 function drawDot(){
@@ -105,6 +107,7 @@ function drawDot(){
 // Called if something bad happens.
 function onFail(message) {
   alert('Failed because: ' + message);
+  _gaq.push(['_trackEvent', 'Exceptions', 'Application', message, null, true]);
 }
 
 //Process shots
