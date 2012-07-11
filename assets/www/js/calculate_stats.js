@@ -39,7 +39,7 @@ function get_label(d){
 
 function dist_distribution(c, pointList, X, Y) {
     var m = new Array();
-    for(i=0;i<20;i+=1){
+    for(i=0;i<9;i+=1){
         m[i] = new Array();
         m[i][0] = get_label(i/10.0);
         m[i][1] = 0;
@@ -47,11 +47,14 @@ function dist_distribution(c, pointList, X, Y) {
     for(i=0;i<pointList.length;i++){
         d = scaled_dist(c,pointList[i],X,Y);
         d = Math.round(d*10);
+        if (d >= m.length) {
+            d = m.length-1;
+        }
         m[d][1] += 1;
     }
     var a = new Array();
     a.push(new Array("Distance","Number of Shots"));
-    for (i=0;i<20;i+=1) {
+    for (i=0;i<9;i+=1) {
         if  (m[i][1] > 0) {
             a.push(m[i]);
         }
@@ -78,17 +81,17 @@ function centroid(c, pointList, X, Y) {
 
     for(i=0;i<pointList.length;i++) {
         p = pointList[i];
-        l = new Array(p.x,p.y);
+        l = new Array(p.x-c.x,c.y-p.y);
 
         if(!pushed_target && c.x == p.x) {
-            l.push(c.y);
+            l.push(c.y-c.y);
             pushed_target = true;
         } else {
             l.push(null);
         }
 
         if(!pushed_centroid && cX == p.x) {
-            l.push(cY);
+            l.push(c.y-cY);
             pushed_centroid = true;
         } else {
             l.push(null);
@@ -98,9 +101,9 @@ function centroid(c, pointList, X, Y) {
     }
     
     if( !pushed_target ) {
-        l = new Array(c.x, null, c.y);
+        l = new Array(c.x-c.x, null, c.y-c.y);
         if(!pushed_centroid && cX == c.x) {
-            l.push(cY);
+            l.push(c.y-cY);
             pushed_centroid = true;
         } else {
             l.push(null);
@@ -109,7 +112,7 @@ function centroid(c, pointList, X, Y) {
     }
 
     if( !pushed_centroid ) {
-        a.push(new Array(cX,null,null,cY));
+        a.push(new Array(cX-c.x,null,null,c.y-cY));
     }
 
     return a;
@@ -195,7 +198,7 @@ function drawBarChart(){
   var options = stuff[1];
   var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
   chart.draw(data, options);
-  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Bar Chart']);
+  //_gaq.push(['_trackEvent', 'Interaction', 'Viewed Bar Chart']);
 }
 
 
@@ -205,7 +208,7 @@ function drawPieChart(){
   var options = stuff[1];
   var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
   chart.draw(data, options);
-  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
+  //_gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
 }
 
 function drawScatterChart(){
@@ -214,7 +217,7 @@ function drawScatterChart(){
   var options = stuff[1]; 
   var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
   chart.draw(data, options);
-  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Scatter Chart']);
+  //_gaq.push(['_trackEvent', 'Interaction', 'Viewed Scatter Chart']);
 }
 
 function toggleChart(){
