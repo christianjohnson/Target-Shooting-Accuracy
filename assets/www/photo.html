@@ -11,19 +11,16 @@
   </head>
   <body>
     <div id="main-page" data-role="page">
-      <div id="header" data-role="header" class="ui-header ui-bar-a">
-        <h2 class="ui-title">Shooting Accuracy</h2>
-      </div>
-      
       <div data-role="content">
         <!-- JQuery FAIL: Can't use it, so have to manually class stuff -->
-        <a onclick="processShots();" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
-          <span class="ui-btn-inner ui-btn-corner-all">
-            <span class="ui-btn-text">
-              <div id="help_button">Tap the target on the photo</div>
+        <div id="help_button">
+          <a onclick="processShots();" class="ui-btn ui-shadow ui-btn-corner-all ui-btn-up-b">
+            <span class="ui-btn-inner ui-btn-corner-all">
+              <span class="ui-btn-text" id="help_text">Tap the target on the photo</span>
             </span>
-          </span>
-        </a>        
+          </a>
+        </div>
+        
         <!-- Drawing Canvas -->
         <div id="canvas-div"></div>
       </div>

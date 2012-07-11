@@ -41,7 +41,7 @@ function onPhotoCaptureSuccess(imageURI) {
 		  y: 0,
 		  image: image_obj,
 		  width: window.innerWidth,
-		  height: window.innerHeight * .9
+		  height: window.innerHeight - document.getElementById("help_button").offsetHeight
 	  });
 	  dots_layer.removeChildren();
 	  image_layer.removeChildren();
@@ -65,7 +65,7 @@ function drawDot(){
 	touch_y = touch_event.y;
 	var color = '#32CD32';
 	var name = 'shot';
-	var help_btn = document.getElementById('help_button');
+	var help_btn = document.getElementById('help_text');
 	
 	if (!draw_target){
 		color = '#FF0000';
