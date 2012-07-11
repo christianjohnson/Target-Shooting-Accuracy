@@ -72,6 +72,48 @@ function centroid(c, pointList, X, Y) {
 
     a = new Array();
     a.push(new Array("X","Shots","Target","Centroid"));
+    
+    pushed_target = false;
+    pushed_centroid = false;
+
+    for(i=0;i<pointList.length;i++) {
+        p = pointList[i];
+        l = new Array(p.x,p.y);
+
+        if(!pushed_target && c.x == p.x) {
+            l.push(c.y);
+            pushed_target = true;
+        } else {
+            l.push(null);
+        }
+
+        if(!pushed_centroid && cX == p.x) {
+            l.push(cY);
+            pushed_centroid = true;
+        } else {
+            l.push(null);
+        }
+
+        a.push( l );
+    }
+    
+    if( !pushed_target ) {
+        l = new Array(c.x, null, c.y);
+        if(!pushed_centroid && cX == c.x) {
+            l.push(cY);
+            pushed_centroid = true;
+        } else {
+            l.push(null);
+        }
+        a.push(l);
+    }
+
+    if( !pushed_centroid ) {
+        a.push(new Array(cX,null,null,cY));
+    }
+
+    return a;
+}
 
 function get_stats(pointList, xDimen, yDimen){
     c = new Array();
