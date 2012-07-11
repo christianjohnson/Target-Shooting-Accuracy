@@ -203,13 +203,13 @@ function drawPieChart(){
 }
 
 function drawScatterChart(){
-	  var stuff = getData(true);
-	  var data = stuff[0];
-	  var options = stuff[1];
-	  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-	  chart.draw(data, options);
-	  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
-	}
+  var stuff = getData(true);
+  var data = stuff[0];
+  var options = stuff[1]; 
+  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+  chart.draw(data, options);
+  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
+}
 
 function toggleChart(){
   if (bar_view == 0){
