@@ -152,7 +152,7 @@ function get_stats(pointList, xDimen, yDimen){
 
 google.load("visualization", "1", {packages:["corechart"]});
 google.setOnLoadCallback(drawBarChart);
-var bar_view = 1;
+var bar_view = 2;
 
 function getData(legend_flag, stats){
   var circles = JSON.parse(window.localStorage.getItem("shots"));
@@ -197,18 +197,18 @@ function drawPieChart(){
   var stuff = getData(true, true);
   var data = stuff[0];
   var options = stuff[1];
-  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
   chart.draw(data, options);
-  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Scatter Chart']);
+  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
 }
 
 function drawScatterChart(){
   var stuff = getData(true, false);
   var data = stuff[0];
   var options = stuff[1]; 
-  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
   chart.draw(data, options);
-  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
+  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Scatter Chart']);
 }
 
 function toggleChart(){
