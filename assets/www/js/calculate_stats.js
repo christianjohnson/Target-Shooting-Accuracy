@@ -80,34 +80,63 @@ function get_stats(pointList, xDimen, yDimen){
 
 
 google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawChart);
+google.setOnLoadCallback(drawBarChart);
+var bar_view = true;
 
 
-function drawChart() {
-  var circles = JSON.parse(window.localStorage.getItem("shots"));
-  var width = window.localStorage.getItem("window_width");
-  var height = window.localStorage.getItem("window_height");
-  var data = google.visualization.arrayToDataTable(get_stats(circles, 
-                                                             width, 
-                                                             height));
-  var chart_height = window.innerHeight - 
-    document.getElementById("help_button").offsetHeight - 
-    document.getElementById("footer").offsetHeight
-  var options = {
-    height: chart_height,
-    width: window.innerWidth,
-    legend: {position: 'none'},
-    title: 'Shot Performance',
-    vAxis: {title: 'Quality of Shot',  titleTextStyle: {color: 'red'}},
-    hAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}}
-  };
-  
-  var chart = new google.visualization.BarChart(
-      document.getElementById('chart_div'));
-  chart.draw(data, options);
-  
-  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Stats']);
-  
+function getData(legend_flag){
+	  var circles = JSON.parse(window.localStorage.getItem("shots"));
+	  var width = window.localStorage.getItem("window_width");
+	  var height = window.localStorage.getItem("window_height");
+	  var data = google.visualization.arrayToDataTable(
+			  get_stats(circles,width,height));
+	  var chart_height = window.innerHeight - 
+	    document.getElementById("help_button").offsetHeight - 
+		document.getElementById("footer").offsetHeight
+	  
+	  var legend = legend_flag ? {position: 'top'} : {position : 'none'};
+	  
+	  var options = {
+	    height: chart_height,
+		width: window.innerWidth,
+		legend: legend,
+	    title: 'Shot Performance',
+		vAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'}},
+		hAxis: {title: 'Quality of Shots',  titleTextStyle: {color: 'red'}}
+	  };
+	  
+	  return [data, options];
 }
 
 
+function drawBarChart(){
+  var stuff = getData(false);
+  var data = stuff[0];
+  var options = stuff[1];
+  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+  chart.draw(data, options);
+  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Bar Chart']);
+}
+
+
+function drawPieChart(){
+  var stuff = getData(true);
+  var data = stuff[0];
+  var options = stuff[1];
+  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+  chart.draw(data, options);
+  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
+}
+
+
+function toggleChart(){
+  if (bar_view){
+	  drawPieChart();
+	  document.getElementById('chart_text').innerHTML = "Bar Chart";
+	  bar_view = !bar_view;
+  }else{
+	  drawBarChart();
+	  document.getElementById('chart_text').innerHTML = "Pie Chart";
+	  bar_view = !bar_view;
+  }
+}
