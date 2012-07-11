@@ -52,13 +52,13 @@ function dist_distribution(c, pointList, X, Y)
     for(i=0;i<pointList.length;i++)
     {
         d = scaled_dist(c,pointList[i],X,Y);
-        d = Math.round(d*10)/10.0;
-        m[d/10.0][1] += 1;
+        d = Math.round(d*10);
+        m[d][1] += 1;
     }
     var a = new Array();
     a.push(new Array("Distance","Number of Shots"));
     for (i=0;i<20;i+=1) {
-        if  m[i/10.0][1] > 0) {
+        if  (m[i][1] > 0) {
             a.push(m[i]);
         }
     }
