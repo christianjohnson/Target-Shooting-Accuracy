@@ -125,5 +125,6 @@ function processShots(){
   window.localStorage.setItem("shots", JSON.stringify(circles_to_rtn));
   window.localStorage.setItem("window_width", window.innerWidth);
   window.localStorage.setItem("window_height", window.innerHeight);
-  window.location = "stats.html";
+  _gaq.push(['_trackEvent', 'Interaction', 'Took Photo']);
+  window.location = "loading_screen.html";
 }

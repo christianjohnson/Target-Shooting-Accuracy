@@ -163,7 +163,7 @@ function getData(legend_flag, stats){
   var height = window.localStorage.getItem("window_height");
   var chart_height = window.innerHeight - 
   	document.getElementById("help_button").offsetHeight - 
-  	document.getElementById("footer").offsetHeight;
+  	document.getElementById("footer").offsetHeight;	
   
   var parsed_data = null;
   
@@ -198,7 +198,7 @@ function drawBarChart(){
   var options = stuff[1];
   var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
   chart.draw(data, options);
-  //_gaq.push(['_trackEvent', 'Interaction', 'Viewed Bar Chart']);
+  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Bar Chart']);
 }
 
 
@@ -208,7 +208,7 @@ function drawPieChart(){
   var options = stuff[1];
   var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
   chart.draw(data, options);
-  //_gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
+  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
 }
 
 function drawScatterChart(){
@@ -217,7 +217,7 @@ function drawScatterChart(){
   var options = stuff[1]; 
   var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
   chart.draw(data, options);
-  //_gaq.push(['_trackEvent', 'Interaction', 'Viewed Scatter Chart']);
+  _gaq.push(['_trackEvent', 'Interaction', 'Viewed Scatter Chart']);
 }
 
 function toggleChart(){
