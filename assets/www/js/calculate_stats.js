@@ -63,6 +63,46 @@ function dist_distribution(c, pointList, X, Y) {
     return a;
 }
 
+function centroid_static(c,pointList,X,Y,graphX,graphY) {
+
+    cX = 0.0;
+    cY = 0.0;
+    for(i=0;i<pointList.length;i++) {
+        cX += pointList[i].x;
+        cY += pointList[i].y;
+    }
+    cX = cX / pointList.length;
+    cY = cY / pointList.length;
+
+   http://chart.googleapis.com/chart?cht=s&chs=300x200&chd=t:25,2,70,50,60|35,4,80,50,60&chco=FF0000|00FF00|0000FF|0000FF|0000FF&chdl=Target|Centroid|Shots&chg=10,10,4,4,-5,-5
+
+    s  = 'http://chart.googleapis.com/chart?cht=s&';
+    s += 'chs=' + graphX + 'x' + graphY + '&';
+    s += 'chd=t:';
+
+    xS = c.x + ',' + cX;
+    yS = c.y + ',' + cY;
+    colors = 'FF0000|00FF00';
+
+    for (i=0;i<pointList.length;i++) {
+        xS += ',' + pointList[i].x;
+        xY += ',' + pointList[i].y;
+        colors += '|0000FF';
+    }
+
+    s += xS + '|' + yS + '&' + 'chco=' + colors + '&';
+
+    s += 'chdl=Target|Centroid|Shots&';
+
+    s += 'chg=10,10,4,4' + string(c.x%10) + string(c.y%10);
+
+    return s
+}
+
+    
+
+
+
 function centroid(c, pointList, X, Y) {
     cX = 0.0;
     cY = 0.0;
