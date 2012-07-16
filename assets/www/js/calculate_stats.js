@@ -158,6 +158,23 @@ function centroid(c, pointList, X, Y) {
     return a;
 }
 
+function get_static_centroid_stats(pointList, xDimen, yDimen,xGraph,yGraph) {
+    c = new Array();
+    l = new Array();
+    for(i=0;i<pointList.length;i++)
+    {
+        if(pointList[i].name == "target")
+        {
+            c.push(pointList[i]);
+        }
+        else
+        {
+            l.push(pointList[i]);
+        }
+    }
+    return centroid_static(c[0], l, xDimen, yDimen, xGraph, yGraph);
+}
+
 function get_centroid_stats(pointList, xDimen, yDimen){
     c = new Array();
     l = new Array();
