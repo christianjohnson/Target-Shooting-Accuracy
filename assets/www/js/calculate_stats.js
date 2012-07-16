@@ -67,6 +67,7 @@ function centroid_static(c,pointList,X,Y,graphX,graphY) {
 
     cX = 0.0;
     cY = 0.0;
+
     for(i=0;i<pointList.length;i++) {
         cX += pointList[i].x;
         cY += pointList[i].y;
@@ -80,13 +81,25 @@ function centroid_static(c,pointList,X,Y,graphX,graphY) {
     s += 'chs=' + graphX + 'x' + graphY + '&';
     s += 'chd=t:';
 
-    xS = c.x + ',' + cX;
-    yS = c.y + ',' + cY;
+    maxX = c.x;
+    minX = c.x;
+    maxY = c.y;
+    minY = c.y;
+
+    for(i=0;i<pointList.length;i++) {
+        maxX = Math.max(maxX,pointList[i].x);
+        minX = Math.max(minX,pointList[i].x);
+        maxY = Math.max(maxY,pointList[i].y);
+        minY = Math.max(minY,pointList[i].y);
+    }
+
+    xS = (c.x-minX)/(maxX-minX) + ',' + (cX-minX)/(maxX-minX);
+    yS = (c.y-minY)/(maxY-minY) + ',' + (cY-minY)/(maxY-minY);
     colors = 'FF0000|00FF00';
 
     for (i=0;i<pointList.length;i++) {
-        xS += ',' + pointList[i].x;
-        xY += ',' + pointList[i].y;
+        xS += ',' + (pointList[i].x-minX)/(maxX-minX);
+        yS += ',' + (pointList[i].y-minY)/(maxY-minY);
         colors += '|0000FF';
     }
 
