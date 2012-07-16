@@ -228,9 +228,11 @@ function getData(legend_flag, stats){
   if (stats){
 	parsed_data = google.visualization.arrayToDataTable(get_stats(circles, width, height));
   }else{
-	parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles, width, height));
+	//parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles, width, height));
+	  parsed_data = get_static_centroid_stats(circles, width, height ,width, chart_height);
   }	 
 	
+  
   var legend = legend_flag ? {position: 'top'} : {position : 'none'};
 
   var options = stats ? {
@@ -275,9 +277,10 @@ function drawPieChart(){
 function drawScatterChart(){
   var stuff = getData(true, false);
   var data = stuff[0];
-  var options = stuff[1]; 
-  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-  chart.draw(data, options);
+  $("#chart_div").append('<img src="'+data+'">');
+  //var options = stuff[1]; 
+  //var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+  //chart.draw(data, options);
   _gaq.push(['_trackEvent', 'Interaction', 'Viewed Scatter Chart']);
 }
 
