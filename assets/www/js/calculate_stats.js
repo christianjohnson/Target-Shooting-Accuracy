@@ -209,9 +209,9 @@ function getData(legend_flag, stats){
   var parsed_data = null;
   
   if (stats){
-	parsed_data = google.visualization.arrayToDataTable(get_stats(circles,width,height));
+	parsed_data = google.visualization.arrayToDataTable(get_stats(circles, width, height));
   }else{
-	parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles,width,height));
+	parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles, width, height));
   }	 
 	
   var legend = legend_flag ? {position: 'top'} : {position : 'none'};
