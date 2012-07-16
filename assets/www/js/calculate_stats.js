@@ -138,40 +138,42 @@ function get_centroid_stats(pointList, xDimen, yDimen){
 function get_stats(pointList, xDimen, yDimen){
     c = new Array();
     l = new Array();
-    for(i=0;i<pointList.length;i++)
-    {
-        if(pointList[i].name == "target")
-        {
-            c.push(pointList[i]);
+    for(i=0;i<pointList.length;i++){
+        if(pointList[i].name == "target"){
+          c.push(pointList[i]);
         }
-        else
-        {
-            l.push(pointList[i]);
+        else{
+          l.push(pointList[i]);
         }
     }
     return dist_distribution(c[0], l,xDimen,yDimen);
 }
 
-
-google.load("visualization", "1", {packages:["corechart"]});
-google.setOnLoadCallback(drawBarChart);
-var bar_view = 0;
+try {
+  google.load("visualization", "1", { packages: ["corechart"] } );
+  google.setOnLoadCallback(drawBarChart);
+  var bar_view = 0;	
+} catch (ReferenceError){
+  alert("You seem to be offline.  Please try again when you have a network connection or are on a WiFi network.");
+  window.location = "index.html";
+}
 
 function getData(legend_flag, stats){
   var circles = JSON.parse(window.localStorage.getItem("shots"));
   var width = window.localStorage.getItem("window_width");
   var height = window.localStorage.getItem("window_height");
   var chart_height = window.innerHeight - 
-  	document.getElementById("help_button").offsetHeight - 
-  	document.getElementById("footer").offsetHeight;	
+  	  document.getElementById("help_button").offsetHeight - 
+  	  document.getElementById("footer").offsetHeight;	
   
   var parsed_data = null;
   
-  if (stats)
-    parsed_data = google.visualization.arrayToDataTable(get_stats(circles,width,height));
-  else
+  if (stats){
+	parsed_data = google.visualization.arrayToDataTable(get_stats(circles,width,height));
+  }else{
 	parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles,width,height));
-	  
+  }	 
+	
   var legend = legend_flag ? {position: 'top'} : {position : 'none'};
 
   var options = stats ? {
