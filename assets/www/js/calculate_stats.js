@@ -290,7 +290,9 @@ function drawPieChart(){
 function drawScatterChart(){
   var stuff = getData(true, false);
   var data = stuff[0];
-  $("#chart_div").append('<img src="'+data+'">');
+  $("#chart_div").empty();
+  $("#chart_div").append('<img src="' + data + '" />');
+  console.log("IMG SRC: " + data);
   //var options = stuff[1]; 
   //var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
   //chart.draw(data, options);
