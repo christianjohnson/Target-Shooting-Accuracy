@@ -113,6 +113,10 @@ function onFail(message) {
 //Process shots
 function processShots(){
   var circles = dots_layer.getChildren();
+  if (circles.length < 2){
+	  alert("You need to add at least one shot.  Tap on the photo to mark your target first and then your shot.");
+	  return;
+  }
   var circles_to_rtn = Array();
   for(var i=0; i < circles.length; i++){
     var circle = {

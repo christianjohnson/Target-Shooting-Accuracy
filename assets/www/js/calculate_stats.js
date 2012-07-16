@@ -185,7 +185,9 @@ function getData(legend_flag, stats){
 	height: chart_height,
 	width: window.innerWidth,
 	legend: legend,
-	title: 'Shot Performance'
+	title: 'Shot Performance',
+	vAxis: {textPosition: 'none' },
+    hAxis: {textPosition: 'none' }
   };
   
   return [parsed_data, options];
