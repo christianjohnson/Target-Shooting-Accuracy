@@ -239,7 +239,7 @@ function getData(legend_flag, stats){
   var width = window.localStorage.getItem("window_width");
   var height = window.localStorage.getItem("window_height");
   var chart_height = window.innerHeight - 
-  	  document.getElementById("help_button").offsetHeight;
+  	  2 * document.getElementById("help_button").offsetHeight;
   
   console.log("Window Height: " + window.innerHeight);
   console.log("Window Width: " + window.innerWidth);
