@@ -112,7 +112,7 @@ function centroid_static(c,pointList,X,Y,graphX,graphY) {
 
     s += 'chg=' + 100/(graphX/50) + ',' + 100/(graphY/50) + ',4,4,' + ((100*(c.x-minX)/(maxX-minX))%xScale) + ',' + ((100*(1-(c.y-minY)/(maxY-minY)))%yScale) + '&';
 
-    s += 'chma=10,10,10,60'
+    s += 'chma=10,10,10,10'
 
     return s
 }
