@@ -88,18 +88,18 @@ function centroid_static(c,pointList,X,Y,graphX,graphY) {
 
     for(i=0;i<pointList.length;i++) {
         maxX = Math.max(maxX,pointList[i].x);
-        minX = Math.max(minX,pointList[i].x);
+        minX = Math.min(minX,pointList[i].x);
         maxY = Math.max(maxY,pointList[i].y);
-        minY = Math.max(minY,pointList[i].y);
+        minY = Math.min(minY,pointList[i].y);
     }
 
-    xS = (c.x-minX)/(maxX-minX) + ',' + (cX-minX)/(maxX-minX);
-    yS = (c.y-minY)/(maxY-minY) + ',' + (cY-minY)/(maxY-minY);
+    xS = 100*(c.x-minX)/(maxX-minX) + ',' + 100*(cX-minX)/(maxX-minX);
+    yS = 100*(c.y-minY)/(maxY-minY) + ',' + 100*(cY-minY)/(maxY-minY);
     colors = 'FF0000|00FF00';
 
     for (i=0;i<pointList.length;i++) {
-        xS += ',' + (pointList[i].x-minX)/(maxX-minX);
-        yS += ',' + (pointList[i].y-minY)/(maxY-minY);
+        xS += ',' + 100*(pointList[i].x-minX)/(maxX-minX);
+        yS += ',' + 100*(pointList[i].y-minY)/(maxY-minY);
         colors += '|0000FF';
     }
 
@@ -107,7 +107,7 @@ function centroid_static(c,pointList,X,Y,graphX,graphY) {
 
     s += 'chdl=Target|Centroid|Shots&';
 
-    s += 'chg=10,10,4,4' + string(c.x%10) + string(c.y%10);
+    s += 'chg=10,10,4,4' + c.x%10 + c.y%10;
 
     return s
 }
