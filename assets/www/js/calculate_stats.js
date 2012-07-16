@@ -242,6 +242,7 @@ function getData(legend_flag, stats){
   	  document.getElementById("help_button").offsetHeight;
   
   console.log("Window Height: " + window.innerHeight);
+  console.log("Window Width: " + window.innerWidth);
   console.log("Button height: " + document.getElementById("help_button").offsetHeight);
   
   var parsed_data = null;
@@ -250,7 +251,7 @@ function getData(legend_flag, stats){
 	parsed_data = google.visualization.arrayToDataTable(get_stats(circles, width, height));
   }else{
 	//parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles, width, height));
-	  parsed_data = get_static_centroid_stats(circles, width, height ,width, chart_height);
+	  parsed_data = get_static_centroid_stats(circles, width, height , window.innerWidth, chart_height);
   }	 
 	
   
