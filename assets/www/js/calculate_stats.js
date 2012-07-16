@@ -74,7 +74,7 @@ function centroid_static(c,pointList,X,Y,graphX,graphY) {
     cX = cX / pointList.length;
     cY = cY / pointList.length;
 
-   http://chart.googleapis.com/chart?cht=s&chs=300x200&chd=t:25,2,70,50,60|35,4,80,50,60&chco=FF0000|00FF00|0000FF|0000FF|0000FF&chdl=Target|Centroid|Shots&chg=10,10,4,4,-5,-5
+    //http://chart.googleapis.com/chart?cht=s&chs=300x200&chd=t:25,2,70,50,60|35,4,80,50,60&chco=FF0000|00FF00|0000FF|0000FF|0000FF&chdl=Target|Centroid|Shots&chg=10,10,4,4,-5,-5
 
     s  = 'http://chart.googleapis.com/chart?cht=s&';
     s += 'chs=' + graphX + 'x' + graphY + '&';
