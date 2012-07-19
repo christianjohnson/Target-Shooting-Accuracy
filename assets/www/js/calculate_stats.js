@@ -15,91 +15,147 @@ function avg_dist(C,L){
     return s/L.length;
 }
 
-function get_label(d){
-    if(d < .1) {
-    	return "Perfect";
-    } else if(d < .2) {
-        return "Excellent";
-    } else if(d < .3) {
-        return "Very Good";
-    } else if(d < .4) {
-        return "Good";
-    } else if(d < .5) {
-        return "Okay";
-    } else if(d < .6) {
-        return "Poor";
-    } else if(d < .7) {
-        return "Bad";
-    } else if(d < .8) {
-        return "Dreadful";
-    } else {
-        return "N/A";
-    }
+var cutoffs = new Array(.2,.7,2);
+var labels = new Array("Excellent", "Okay", "Poor");
+var colors = new Array("FF0000","00FF00","0000FF");
+
+function bucket(c,pointList,X,Y) {
+	var m = new Array();
+	for (i=0;i<cutoffs.length;i++) {
+		m[i] = new Array();
+		m[i][0] = labels[i];
+		m[i][1] = 0;
+	}
+	for (i=0;i<pointList.length;i++) {
+		d = scaled_dist(c,pointList[i],X,Y);
+		bucket = 0;
+		for (j=0;j<cutoffs.length;j++) {
+			if(d<cutoffs[j]) {
+				bucket = j;
+				break;
+			}
+		}
+		m[bucket][1] += 1;
+	}
+	return m;
 }
 
-function dist_distribution(c, pointList, X, Y) {
-    var m = new Array();
-    for(i=0;i<9;i+=1){
-        m[i] = new Array();
-        m[i][0] = get_label(i/10.0);
-        m[i][1] = 0;
-    }
+function extract_target(pointList) {
+	c = new Array();
+    l = new Array();
     for(i=0;i<pointList.length;i++){
-        d = scaled_dist(c,pointList[i],X,Y);
-        d = Math.round(d*10);
-        if (d >= m.length) {
-            d = m.length-1;
+        if(pointList[i].name == "target"){
+          c.push(pointList[i]);
         }
-        m[d][1] += 1;
-    }
-    var a = new Array();
-    a.push(new Array("Distance","Number of Shots"));
-    for (i=0;i<9;i+=1) {
-        if  (m[i][1] > 0) {
-            a.push(m[i]);
+        else{
+          l.push(pointList[i]);
         }
     }
-
-    return a;
+    return new Array(c[0],l);
 }
 
-function centroid_static(c,pointList,X,Y,graphX,graphY) {
+function bar_static(pointList,xPic,yPic,xSize,ySize) {
+	a = extract_target(pointList);
+	c = a[0]
+	shots = a[1]
+	
+	m = bucket(c,shots,xPic,yPic);
+	
+	// http://chart.googleapis.com/chart?cht=bvg&chs=250x350&chd=t:10,50,30&chxt=x,y&chco=00FF00|FF0000|0000FF&chxl=0:|Excellent|Okay|Poor&chma=10,10,10,10&chxr=1,0,10&chbh=r
+	
+	s = "http://chart.googleapis.com/chart?cht=bvg&";
+    s += 'chs=' + xSize + 'x' + ySize + '&';
+    s += "chxt=x,y&";
+    
+    data_string = "chd=t:";
+    label_string = "chxl=0:|=";
+    color_string = "chco=";
+    
+    data_max = 0;
+    
+    for (i=0;i<m.length;i++) {
+    	data_string += m[i][1];
+    	label_string += m[i][0];
+    	color_string += colors[i];
+    	if (m[i][1] > data_max) {
+    		data_max = m[i][1];
+    	}
+    	if (i<m.length-1) {
+    		data_string += ",";
+    		label_string += "|";
+    		color_string += "|";
+    	}
+    }
+    
+    s += data_string + "&";
+    s += label_string + "&";
+    s += color_string + "&";
+    
+    s += "chma=10,10,10,10&chxr=1,0,10&chbh=r";
+    
+    return s;
+}
 
-    cX = 0.0;
+function bar_pie_dynamic(pointList,xPic,yPic) {
+	a = extract_target(pointList);
+	c = a[0]
+	shots = a[1]
+	
+	m = bucket(c,shots,xPic,yPic);
+	var a = new Array();
+    a.push(new Array("Distance","Number of Shots"));
+    for(i=0;i<m.length;m++) {
+    	a.push(m[i]);
+    }
+    
+	return a;
+}
+
+function centroid_static(pointList,xSize,ySize) {
+	// Extract the center
+	a = extract_target(pointList);
+	c = a[0];
+	shots = a[1];
+	
+	// Calculate the centroid
+	cX = 0.0;
     cY = 0.0;
 
-    for(i=0;i<pointList.length;i++) {
-        cX += pointList[i].x;
-        cY += pointList[i].y;
+    for(i=0;i<shots.length;i++) {
+        cX += shots[i].x;
+        cY += shots[i].y;
     }
-    cX = cX / pointList.length;
-    cY = cY / pointList.length;
+    cX = cX / shots.length;
+    cY = cY / shots.length;
 
     //http://chart.googleapis.com/chart?cht=s&chs=300x200&chd=t:25,2,70,50,60|35,4,80,50,60&chco=FF0000|00FF00|0000FF|0000FF|0000FF&chdl=Target|Centroid|Shots&chg=10,10,4,4,-5,-5
 
+    // Base URL plus size
     s  = 'http://chart.googleapis.com/chart?cht=s&';
-    s += 'chs=' + graphX + 'x' + graphY + '&';
+    s += 'chs=' + xSize + 'x' + ySize + '&';
     s += 'chd=t:';
 
+    // Calculate the max and min X and Y values for scaling
     maxX = c.x;
     minX = c.x;
     maxY = c.y;
     minY = c.y;
 
-    for(i=0;i<pointList.length;i++) {
-        maxX = Math.max(maxX,pointList[i].x);
-        minX = Math.min(minX,pointList[i].x);
-        maxY = Math.max(maxY,pointList[i].y);
-        minY = Math.min(minY,pointList[i].y);
+    for(i=0;i<shots.length;i++) {
+        maxX = Math.max(maxX,shots[i].x);
+        minX = Math.min(minX,shots[i].x);
+        maxY = Math.max(maxY,shots[i].y);
+        minY = Math.min(minY,shots[i].y);
     }
 
+    // Scale each point to be in [0,100],[0,100]
     xS = 100*(c.x-minX)/(maxX-minX)     + ',' + 100*(cX-minX)/(maxX-minX);
     yS = 100*(1-(c.y-minY)/(maxY-minY)) + ',' + 100*(1-(cY-minY)/(maxY-minY));
     colors = 'FF0000|00FF00';
 
-    for (i=0;i<pointList.length;i++) {
-        xS += ',' + 100*(pointList[i].x-minX)/(maxX-minX);
-        yS += ',' + 100*(1-(pointList[i].y-minY)/(maxY-minY));
+    for (i=0;i<shots.length;i++) {
+        xS += ',' + 100*(shots[i].x-minX)/(maxX-minX);
+        yS += ',' + 100*(1-(shots[i].y-minY)/(maxY-minY));
         colors += '|0000FF';
     }
 
@@ -107,39 +163,43 @@ function centroid_static(c,pointList,X,Y,graphX,graphY) {
 
     s += 'chdl=Target|Centroid|Shots&';
 
-    xScale = 100/(graphX/30);
-    yScale = 100/(graphY/30);
+    xScale = 100/(xSize/30);
+    yScale = 100/(ySize/30);
 
-    s += 'chg=' + 100/(graphX/50) + ',' + 100/(graphY/50) + ',4,4,' + ((100*(c.x-minX)/(maxX-minX))%xScale) + ',' + ((100*(1-(c.y-minY)/(maxY-minY)))%yScale) + '&';
+    // Draw grid lines with 50 pixels distance and centered on the target
+    s += 'chg=' + 100/(xSize/50) + ',' + 100/(ySize/50) + ',4,4,' + ((100*(c.x-minX)/(maxX-minX))%xScale) + ',' + ((100*(1-(c.y-minY)/(maxY-minY)))%yScale) + '&';
 
-    s += 'chma=10,10,10,10'
+    s += 'chma=10,10,10,10';
 
-    return s
+    return s;
 }
 
-
-
-
-
-
-function centroid(c, pointList, X, Y) {
-    cX = 0.0;
+function centroid_dynamic(pointList) {
+	// Extract the center
+	q = extract_target(pointList);
+	c = q[0];
+	shots = q[1];
+	
+	// Calculate the centroid, cX and cY
+	cX = 0.0;
     cY = 0.0;
-    for(i=0;i<pointList.length;i++) {
-        cX += pointList[i].x;
-        cY += pointList[i].y;
+    for(i=0;i<shots.length;i++) {
+        cX += shots[i].x;
+        cY += shots[i].y;
     }
-    cX = cX / pointList.length;
-    cY = cY / pointList.length;
+    cX = cX / shots.length;
+    cY = cY / shots.length;
 
+    // Start building the return array
     a = new Array();
     a.push(new Array("X","Shots","Target","Centroid"));
     
     pushed_target = false;
     pushed_centroid = false;
 
-    for(i=0;i<pointList.length;i++) {
-        p = pointList[i];
+    // If the center or centroid share an X value with each other or a shot, we need to combine them
+    for(i=0;i<shots.length;i++) {
+        p = shots[i];
         l = new Array(p.x-c.x,c.y-p.y);
 
         if(!pushed_target && c.x == p.x) {
@@ -175,40 +235,7 @@ function centroid(c, pointList, X, Y) {
     }
 
     return a;
-}
-
-function get_static_centroid_stats(pointList, xDimen, yDimen,xGraph,yGraph) {
-    c = new Array();
-    l = new Array();
-    for(i=0;i<pointList.length;i++)
-    {
-        if(pointList[i].name == "target")
-        {
-            c.push(pointList[i]);
-        }
-        else
-        {
-            l.push(pointList[i]);
-        }
-    }
-    return centroid_static(c[0], l, xDimen, yDimen, xGraph, yGraph);
-}
-
-function get_centroid_stats(pointList, xDimen, yDimen){
-    c = new Array();
-    l = new Array();
-    for(i=0;i<pointList.length;i++)
-    {
-        if(pointList[i].name == "target")
-        {
-            c.push(pointList[i]);
-        }
-        else
-        {
-            l.push(pointList[i]);
-        }
-    }
-    return centroid(c[0], l, xDimen, yDimen);
+	
 }
 
 function get_stats(pointList, xDimen, yDimen){
