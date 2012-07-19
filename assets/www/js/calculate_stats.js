@@ -315,10 +315,10 @@ function getData(legend_flag, stats){
   var parsed_data = null;
   
   if (stats){
-	parsed_data = google.visualization.arrayToDataTable(get_stats(circles, width, height));
+	parsed_data = google.visualization.arrayToDataTable(bar_pie_dymanic(circles,width,height));
   }else{
 	//parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles, width, height));
-	  parsed_data = get_static_centroid_stats(circles, width, height , window.innerWidth, chart_height);
+	  parsed_data = centroid_static(circles, window.innerWidth, chart_height);
   }	 
 	
   
