@@ -28,14 +28,14 @@ function bucket(c,pointList,X,Y) {
 	}
 	for (i=0;i<pointList.length;i++) {
 		d = scaled_dist(c,pointList[i],X,Y);
-		bucket = 0;
+		b = 0;
 		for (j=0;j<cutoffs.length;j++) {
 			if(d<cutoffs[j]) {
-				bucket = j;
+				b = j;
 				break;
 			}
 		}
-		m[bucket][1] += 1;
+		m[b][1] += 1;
 	}
 	
 	return m;
@@ -218,8 +218,8 @@ function centroid_static(pointList,xSize,ySize) {
 
     s += 'chdl=Target|Centroid|Shots&';
 
-    xScale = 100/(xSize/30);
-    yScale = 100/(ySize/30);
+    xScale = 100/(xSize/50);
+    yScale = 100/(ySize/50);
 
     // Draw grid lines with 50 pixels distance and centered on the target
     s += 'chg=' + 100/(xSize/50) + ',' + 100/(ySize/50) + ',4,4,' + ((100*(c.x-minX)/(maxX-minX))%xScale) + ',' + ((100*(1-(c.y-minY)/(maxY-minY)))%yScale) + '&';
