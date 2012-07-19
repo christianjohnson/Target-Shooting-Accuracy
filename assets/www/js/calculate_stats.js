@@ -54,6 +54,54 @@ function extract_target(pointList) {
     return new Array(c[0],l);
 }
 
+function pie_static(pointList,xPic,yPic,xSize,ySize) {
+	a = extract_target(pointList);
+	c = a[0]
+	shots = a[1]
+	
+	m = bucket(c,shots,xPic,yPic);
+
+	// http://chart.googleapis.com/chart?cht=p&chs=250x350&chdl=Excellent|Okay|Poor&chco=0000FF|00FF00|FF0000&chd=t:10,20,30&chdlp=t&chma=10,10,10,10&chds=0,50
+	
+	s = "http://chart.googleapis.com/chart?cht=bvg&";
+    s += 'chs=' + xSize + 'x' + ySize + '&';
+    
+    data_string = "chd=t:";
+    label_string = "chdl=";
+    color_string = "chco=";
+    
+    data_max = 0;
+    
+    for (i=0;i<m.length;i++) {
+    	if (m[i][1] > data_max) {
+    		data_max = m[i][1];
+    	}
+    }
+    data_max += 1;
+    
+    for (i=0;i<m.length;i++) {
+    	data_string += m[i][1];
+    	label_string += m[i][0];
+    	color_string += colors[i];
+    	if (i<m.length-1) {
+    		data_string += ",";
+    		label_string += "|";
+    		color_string += "|";
+    	}
+    }
+    
+    s += data_string + "&";
+    s += label_string + "&";
+    s += color_string + "&";
+    s += "chds=0," + data_max + "&";
+    
+    s += "chdlp=t&chma=10,10,10,10";
+    
+    return s;
+	
+	
+}
+
 function bar_static(pointList,xPic,yPic,xSize,ySize) {
 	a = extract_target(pointList);
 	c = a[0]
@@ -68,18 +116,22 @@ function bar_static(pointList,xPic,yPic,xSize,ySize) {
     s += "chxt=x,y&";
     
     data_string = "chd=t:";
-    label_string = "chxl=0:|=";
+    label_string = "chxl=0:|";
     color_string = "chco=";
     
     data_max = 0;
     
     for (i=0;i<m.length;i++) {
-    	data_string += m[i][1];
-    	label_string += m[i][0];
-    	color_string += colors[i];
     	if (m[i][1] > data_max) {
     		data_max = m[i][1];
     	}
+    }
+    data_max += 1;
+    
+    for (i=0;i<m.length;i++) {
+    	data_string += (m[i][1]/data_max) * 100;
+    	label_string += m[i][0];
+    	color_string += colors[i];
     	if (i<m.length-1) {
     		data_string += ",";
     		label_string += "|";
@@ -91,7 +143,9 @@ function bar_static(pointList,xPic,yPic,xSize,ySize) {
     s += label_string + "&";
     s += color_string + "&";
     
-    s += "chma=10,10,10,10&chxr=1,0,10&chbh=r";
+    s += "chxr=1,0," + data_max + "&";
+    
+    s += "chma=10,10,10,10&chbh=r";
     
     return s;
 }
@@ -236,20 +290,6 @@ function centroid_dynamic(pointList) {
 
     return a;
 	
-}
-
-function get_stats(pointList, xDimen, yDimen){
-    c = new Array();
-    l = new Array();
-    for(i=0;i<pointList.length;i++){
-        if(pointList[i].name == "target"){
-          c.push(pointList[i]);
-        }
-        else{
-          l.push(pointList[i]);
-        }
-    }
-    return dist_distribution(c[0], l, xDimen, yDimen);
 }
 
 try {
