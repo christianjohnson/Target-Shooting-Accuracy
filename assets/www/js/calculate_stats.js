@@ -1,3 +1,10 @@
+var cutoffs = new Array(.2,.7,2);
+var labels = new Array("Excellent", "Okay", "Poor");
+var colors = new Array("FF0000","00FF00","0000FF");
+var circles = JSON.parse(window.localStorage.getItem("shots"));
+var width = window.localStorage.getItem("window_width");
+var height = window.localStorage.getItem("window_height");
+
 function dist(A,B){
     return Math.sqrt( Math.pow( A.x - B.x, 2 ) + Math.pow(A.y - B.y, 2 ) );
 }
@@ -14,10 +21,6 @@ function avg_dist(C,L){
 
     return s/L.length;
 }
-
-var cutoffs = new Array(.2,.7,2);
-var labels = new Array("Excellent", "Okay", "Poor");
-var colors = new Array("FF0000","00FF00","0000FF");
 
 function bucket(c,pointList,X,Y) {
 	var m = new Array();
@@ -166,7 +169,7 @@ function bar_pie_dynamic(pointList,xPic,yPic) {
 	return a;
 }
 
-function centroid_static(pointList,xSize,ySize) {
+function centroid_static(pointList, xSize, ySize) {
 	// Extract the center
 	a = extract_target(pointList);
 	c = a[0];
@@ -293,86 +296,135 @@ function centroid_dynamic(pointList) {
 	
 }
 
-try {
+
+var chart_height = window.innerHeight - 3.25 * $("#help_button").offsetHeight;
+
+try{
   google.load("visualization", "1", { packages: ["corechart"] } );
   google.setOnLoadCallback(drawBarChart);
   var bar_view = 0;	
-} catch (ReferenceError){
+}catch (ReferenceError){
   alert("You seem to be offline.  Please try again when you have a network connection or are on a WiFi network.");
   window.location = "index.html";
 }
 
-function getData(legend_flag, stats){
-  var circles = JSON.parse(window.localStorage.getItem("shots"));
-  var width = window.localStorage.getItem("window_width");
-  var height = window.localStorage.getItem("window_height");
-  var chart_height = window.innerHeight - 
-  	  3.25 * document.getElementById("help_button").offsetHeight;
-  
-  console.log("Window Height: " + window.innerHeight);
-  console.log("Window Width: " + window.innerWidth);
-  console.log("Button height: " + document.getElementById("help_button").offsetHeight);
-  
+
+function supportSVG(){
+	var ua = navigator.userAgent;
+	if( ua.indexOf("Android") >= 0 ){
+	  var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8)); 
+	  if (androidversion > 2.3){
+	    return true;
+	  }
+	}
+	return false;
+}
+
+function getDataPie(img){
+	var parsed_data = null;
+	if (img){
+	  return pie_static(circles, width, height, window.innerWidth, chart_height);
+	}else{
+	  parsed_data = google.visualization.arrayToDataTable(bar_pie_dynamic(circles, width, height));
+	}
+	
+	var legend = {position: 'top'};
+	
+	var options = {
+		height: chart_height,
+		width: window.innerWidth,
+		legend: legend,
+		title: 'Shot Performance',
+		vAxis: {textPosition: 'none' },
+	    hAxis: {textPosition: 'none' }
+    }
+}
+
+function getDataBar(img){  
   var parsed_data = null;
   
-  if (stats){
-	parsed_data = google.visualization.arrayToDataTable(bar_pie_dynamic(circles,width,height));
+  if (img){
+	return bar_static(circles, width, height, window.innerWidth, chart_height);;
   }else{
-	//parsed_data = google.visualization.arrayToDataTable(get_centroid_stats(circles, width, height));
-	  parsed_data = centroid_static(circles, window.innerWidth, chart_height);
-  }	 
-	
+	parsed_data = google.visualization.arrayToDataTable(bar_pie_dynamic(circles, width, height));
+  }
   
-  var legend = legend_flag ? {position: 'top'} : {position : 'none'};
+  var legend = {position : 'none'};
 
-  var options = stats ? {
+  var options = {
     height: chart_height,
 	width: window.innerWidth,
 	legend: legend,
 	title: 'Shot Performance',
     vAxis: {title: 'Number of Shots',  titleTextStyle: {color: 'red'} },
     hAxis: {title: 'Quality of Shots',  titleTextStyle: {color: 'red'} }
-  } : {
-	height: chart_height,
-	width: window.innerWidth,
-	legend: legend,
-	title: 'Shot Performance',
-	vAxis: {textPosition: 'none' },
-    hAxis: {textPosition: 'none' }
   };
   
   return [parsed_data, options];
 }
 
+function getDataScatter(img){  
+	  var parsed_data = null;
+	  if (img){
+		return centroid_static(circles, window.innerWidth, chart_height);
+	  }else{
+		parsed_data = google.visualization.arrayToDataTable(centroid_dynamic(circles));
+	  }
+	  var legend = {position : 'none'};
+	  var options = {
+	    height: chart_height,
+		width: window.innerWidth,
+		legend: legend,
+		title: 'Shot Performance',
+	  };
+	  return [parsed_data, options];
+}
 
 function drawBarChart(){
-  var stuff = getData(false, true);
-  var data = stuff[0];
-  var options = stuff[1];
-  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-  chart.draw(data, options);
+  if (supportSVG()){
+	  var data = getDataBar(true);
+	  $("#chart_div").empty();
+	  $("#chart_div").append('<img src="' + data + '" />');
+	  console.log("IMG SRC: " + data);
+  }else{
+	  var stuff = getDataBar(false);
+	  var data = stuff[0];
+	  var options = stuff[1];
+	  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+	  chart.draw(data, options);
+  }
   _gaq.push(['_trackEvent', 'Interaction', 'Viewed Bar Chart']);
 }
 
-
 function drawPieChart(){
-  var stuff = getData(true, true);
-  var data = stuff[0];
-  var options = stuff[1];
-  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-  chart.draw(data, options);
+  if (supportSVG()){
+	  var data = getDataPie(true);
+	  $("#chart_div").empty();
+	  $("#chart_div").append('<img src="' + data + '" />');
+	  console.log("IMG SRC: " + data);
+  }else{
+	  var stuff = getData(false);
+	  var data = stuff[0];
+	  var options = stuff[1];
+	  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+	  chart.draw(data, options);	  
+  }
   _gaq.push(['_trackEvent', 'Interaction', 'Viewed Pie Chart']);
 }
 
 function drawScatterChart(){
-  var stuff = getData(true, false);
-  var data = stuff[0];
-  $("#chart_div").empty();
-  $("#chart_div").append('<img src="' + data + '" />');
-  console.log("IMG SRC: " + data);
-  //var options = stuff[1]; 
-  //var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
-  //chart.draw(data, options);
+  if (supportSVG()){
+	  var data = getDataScatter(true);
+	  $("#chart_div").empty();
+	  $("#chart_div").append('<img src="' + data + '" />');
+	  console.log("IMG SRC: " + data);
+  }else{
+	  var stuff = getData(false);
+	  var data = stuff[0];
+	  var options = stuff[1];
+	  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+	  chart.draw(data, options);
+  }
   _gaq.push(['_trackEvent', 'Interaction', 'Viewed Scatter Chart']);
 }
 
