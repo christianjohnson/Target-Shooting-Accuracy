@@ -338,6 +338,8 @@ function getDataPie(img){
 		vAxis: {textPosition: 'none' },
 	    hAxis: {textPosition: 'none' }
     }
+	  
+	return [parsed_data, options];
 }
 
 function getDataBar(img){  
@@ -381,7 +383,7 @@ function getDataScatter(img){
 }
 
 function drawBarChart(){
-  if (supportSVG()){
+  if (!supportSVG()){
 	  var data = getDataBar(true);
 	  $("#chart_div").empty();
 	  $("#chart_div").append('<img src="' + data + '" />');
@@ -397,13 +399,13 @@ function drawBarChart(){
 }
 
 function drawPieChart(){
-  if (supportSVG()){
+  if (!supportSVG()){
 	  var data = getDataPie(true);
 	  $("#chart_div").empty();
 	  $("#chart_div").append('<img src="' + data + '" />');
 	  console.log("IMG SRC: " + data);
   }else{
-	  var stuff = getData(false);
+	  var stuff = getDataPie(false);
 	  var data = stuff[0];
 	  var options = stuff[1];
 	  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -413,13 +415,13 @@ function drawPieChart(){
 }
 
 function drawScatterChart(){
-  if (supportSVG()){
+  if (!supportSVG()){
 	  var data = getDataScatter(true);
 	  $("#chart_div").empty();
 	  $("#chart_div").append('<img src="' + data + '" />');
 	  console.log("IMG SRC: " + data);
   }else{
-	  var stuff = getData(false);
+	  var stuff = getDataScatter(false);
 	  var data = stuff[0];
 	  var options = stuff[1];
 	  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
