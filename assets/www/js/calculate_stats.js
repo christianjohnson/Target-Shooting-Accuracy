@@ -296,8 +296,7 @@ function centroid_dynamic(pointList) {
 	
 }
 
-
-var chart_height = window.innerHeight - 3.25 * $("#help_button").offsetHeight;
+var chart_height = Math.round(window.innerHeight * .7);
 
 try{
   google.load("visualization", "1", { packages: ["corechart"] } );
@@ -345,7 +344,7 @@ function getDataBar(img){
   var parsed_data = null;
   
   if (img){
-	return bar_static(circles, width, height, window.innerWidth, chart_height);;
+	return bar_static(circles, width, height, window.innerWidth, chart_height);
   }else{
 	parsed_data = google.visualization.arrayToDataTable(bar_pie_dynamic(circles, width, height));
   }
