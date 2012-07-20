@@ -313,6 +313,7 @@ function supportSVG(){
 	var ua = navigator.userAgent;
 	if( ua.indexOf("Android") >= 0 ){
 	  var androidversion = parseFloat(ua.slice(ua.indexOf("Android") + 8)); 
+	  console.log(androidversion);
 	  if (androidversion > 2.3){
 	    return true;
 	  }
