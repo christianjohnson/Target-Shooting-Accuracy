@@ -436,14 +436,16 @@ function toggleChart(){
   if (bar_view == 0){
 	  console.log("Drawing pie chart: " + bar_view);
 	  drawPieChart();
-	  document.getElementById('chart_text').innerHTML = "Toggle Scatter Chart";
+	  //document.getElementById('chart_text').innerHTML = "Toggle Scatter Chart";
+	  document.getElementById('chart_text').innerHTML = "Toggle Bar Chart";
 	  bar_view++;
-  }else if (bar_view == 1){
+  }/*else if (bar_view == 1){
+	  
 	  console.log("Drawing scatter chart: " + bar_view);
 	  drawScatterChart();
 	  document.getElementById('chart_text').innerHTML = "Toggle Bar Chart";
-	  bar_view++;
-  }else{
+	  bar_view++;  
+  }*/else{
 	  console.log("Drawing bar chart: " + bar_view);
 	  drawBarChart();
 	  document.getElementById('chart_text').innerHTML = "Toggle Pie Chart";
