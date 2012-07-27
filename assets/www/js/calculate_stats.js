@@ -367,12 +367,14 @@ function getDataBar(img){
 
 function getDataScatter(img){  
 	  var parsed_data = null;
+	  var legend = {position : 'none'};
 	  if (img){
 		return centroid_static(circles, window.innerWidth, chart_height);
 	  }else{
 		parsed_data = google.visualization.arrayToDataTable(centroid_dynamic(circles));
+		legend = {position : 'top'};
 	  }
-	  var legend = {position : 'none'};
+	  
 	  var options = {
 	    height: chart_height,
 		width: window.innerWidth,
