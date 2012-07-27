@@ -117,7 +117,7 @@ function bar_static(pointList,xPic,yPic,xSize,ySize) {
 	
 	s = "http://chart.googleapis.com/chart?cht=bvg&";
     s += 'chs=' + xSize + 'x' + ySize + '&';
-    s += "chxt=x,y&";
+    s += "chxt=x,y,y&";
     
     data_string = "chd=t:";
     label_string = "chxl=0:|";
@@ -144,7 +144,7 @@ function bar_static(pointList,xPic,yPic,xSize,ySize) {
     }
     
     s += data_string + "&";
-    s += label_string + "&";
+    s += label_string + "|2:|Number|of|Shots&chxp=2,55,50,45&chxs=2,545454,11,0&";
     s += color_string + "&";
     
     s += "chxr=1,0," + data_max + "&";
@@ -385,7 +385,7 @@ function getDataScatter(img){
 }
 
 function drawBarChart(){
-  if (!supportSVG()){
+  if (supportSVG()){
 	  var data = getDataBar(true);
 	  $("#chart_div").empty();
 	  $("#chart_div").append('<img src="' + data + '" />');
@@ -401,7 +401,7 @@ function drawBarChart(){
 }
 
 function drawPieChart(){
-  if (!supportSVG()){
+  if (supportSVG()){
 	  var data = getDataPie(true);
 	  $("#chart_div").empty();
 	  $("#chart_div").append('<img src="' + data + '" />');
@@ -417,7 +417,7 @@ function drawPieChart(){
 }
 
 function drawScatterChart(){
-  if (!supportSVG()){
+  if (supportSVG()){
 	  var data = getDataScatter(true);
 	  $("#chart_div").empty();
 	  $("#chart_div").append('<img src="' + data + '" />');
