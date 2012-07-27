@@ -385,7 +385,7 @@ function getDataScatter(img){
 }
 
 function drawBarChart(){
-  if (supportSVG()){
+  if (!supportSVG()){
 	  var data = getDataBar(true);
 	  $("#chart_div").empty();
 	  $("#chart_div").append('<img src="' + data + '" />');
@@ -401,7 +401,7 @@ function drawBarChart(){
 }
 
 function drawPieChart(){
-  if (supportSVG()){
+  if (!supportSVG()){
 	  var data = getDataPie(true);
 	  $("#chart_div").empty();
 	  $("#chart_div").append('<img src="' + data + '" />');
@@ -417,7 +417,7 @@ function drawPieChart(){
 }
 
 function drawScatterChart(){
-  if (supportSVG()){
+  if (!supportSVG()){
 	  var data = getDataScatter(true);
 	  $("#chart_div").empty();
 	  $("#chart_div").append('<img src="' + data + '" />');
