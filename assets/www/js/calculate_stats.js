@@ -1,4 +1,4 @@
-var cutoffs = new Array(.2,.7,2);
+var cutoffs = new Array(.15,.4,2);
 var labels = new Array("Excellent", "Okay", "Poor");
 var colors = new Array("FF0000","00FF00","0000FF");
 var circles = JSON.parse(window.localStorage.getItem("shots"));
@@ -67,7 +67,7 @@ function pie_static(pointList,xPic,yPic,xSize,ySize) {
 
 	// http://chart.googleapis.com/chart?cht=p&chs=250x350&chdl=Excellent|Okay|Poor&chco=0000FF|00FF00|FF0000&chd=t:10,20,30&chdlp=t&chma=10,10,10,10&chds=0,50
 	
-	s = "http://chart.googleapis.com/chart?cht=bvg&";
+	s = "http://chart.googleapis.com/chart?cht=p&";
     s += 'chs=' + xSize + 'x' + ySize + '&';
     
     data_string = "chd=t:";
@@ -207,17 +207,17 @@ function centroid_static(pointList, xSize, ySize) {
     }
 
     // Scale each point to be in [0,100],[0,100]
-    xS = 100*(c.x-minX)/(maxX-minX)     + ',' + 100*(cX-minX)/(maxX-minX);
-    yS = 100*(1-(c.y-minY)/(maxY-minY)) + ',' + 100*(1-(cY-minY)/(maxY-minY));
-    colors = 'FF0000|00FF00';
+    xS = Math.round(100*(c.x-minX)/(maxX-minX))     + ',' + Math.round(100*(cX-minX)/(maxX-minX));
+    yS = Math.round(100*(1-(c.y-minY)/(maxY-minY))) + ',' + Math.round(100*(1-(cY-minY)/(maxY-minY)));
+    color_string = 'FF0000|00FF00';
 
     for (i=0;i<shots.length;i++) {
-        xS += ',' + 100*(shots[i].x-minX)/(maxX-minX);
-        yS += ',' + 100*(1-(shots[i].y-minY)/(maxY-minY));
-        colors += '|0000FF';
+        xS += ',' + Math.round(100*(shots[i].x-minX)/(maxX-minX));
+        yS += ',' + Math.round(100*(1-(shots[i].y-minY)/(maxY-minY)));
+        color_string += '|0000FF';
     }
 
-    s += xS + '|' + yS + '&' + 'chco=' + colors + '&';
+    s += xS + '|' + yS + '&' + 'chco=' + color_string + '&';
 
     s += 'chdl=Target|Centroid|Shots&';
 
@@ -338,6 +338,8 @@ function getDataPie(img){
 		vAxis: {textPosition: 'none' },
 	    hAxis: {textPosition: 'none' }
     }
+	  
+	return [parsed_data, options];
 }
 
 function getDataBar(img){  
@@ -403,7 +405,7 @@ function drawPieChart(){
 	  $("#chart_div").append('<img src="' + data + '" />');
 	  console.log("IMG SRC: " + data);
   }else{
-	  var stuff = getData(false);
+	  var stuff = getDataPie(false);
 	  var data = stuff[0];
 	  var options = stuff[1];
 	  var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -419,7 +421,7 @@ function drawScatterChart(){
 	  $("#chart_div").append('<img src="' + data + '" />');
 	  console.log("IMG SRC: " + data);
   }else{
-	  var stuff = getData(false);
+	  var stuff = getDataScatter(false);
 	  var data = stuff[0];
 	  var options = stuff[1];
 	  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
