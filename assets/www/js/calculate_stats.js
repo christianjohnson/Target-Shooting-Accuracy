@@ -436,16 +436,17 @@ function toggleChart(){
   if (bar_view == 0){
 	  console.log("Drawing pie chart: " + bar_view);
 	  drawPieChart();
-	  //document.getElementById('chart_text').innerHTML = "Toggle Scatter Chart";
-	  document.getElementById('chart_text').innerHTML = "Toggle Bar Chart";
+	  document.getElementById('chart_text').innerHTML = "Toggle Scatter Chart";
+	  //document.getElementById('chart_text').innerHTML = "Toggle Bar Chart";
 	  bar_view++;
-  }/*else if (bar_view == 1){
-	  
-	  console.log("Drawing scatter chart: " + bar_view);
-	  drawScatterChart();
+  }else if (bar_view == 1){
+	  console.log("Advertising scatter chart: " + bar_view);
+	  //Advertise Paid App
+	  $("#chart_div").empty();
+	  $("#chart_div").append('<h1>Get the <a href="market://details?id=com.chrjo.targetpaid">premium version</a> for just .99 and get a scatter plot, and no ads!</h1>');
 	  document.getElementById('chart_text').innerHTML = "Toggle Bar Chart";
 	  bar_view++;  
-  }*/else{
+  }else{
 	  console.log("Drawing bar chart: " + bar_view);
 	  drawBarChart();
 	  document.getElementById('chart_text').innerHTML = "Toggle Pie Chart";

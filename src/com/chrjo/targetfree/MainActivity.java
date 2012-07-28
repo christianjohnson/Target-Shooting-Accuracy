@@ -1,4 +1,4 @@
-package com.chrjo.targetshootingcalculator;
+package com.chrjo.targetfree;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
