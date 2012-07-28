@@ -439,7 +439,6 @@ function toggleChart(){
 	  document.getElementById('chart_text').innerHTML = "Toggle Scatter Chart";
 	  bar_view++;
   }else if (bar_view == 1){
-	  
 	  console.log("Drawing scatter chart: " + bar_view);
 	  drawScatterChart();
 	  document.getElementById('chart_text').innerHTML = "Toggle Bar Chart";

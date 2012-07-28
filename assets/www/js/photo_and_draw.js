@@ -130,5 +130,5 @@ function processShots(){
   window.localStorage.setItem("window_width", window.innerWidth);
   window.localStorage.setItem("window_height", window.innerHeight);
   _gaq.push(['_trackEvent', 'Interaction', 'Took Photo']);
-  window.location = "loading_screen.html";
+  window.location = "stats.html";
 }
